@@ -1,5 +1,4 @@
-# AHP
-The Analytic Hierarchy Process (AHP)
+# The Analytic Hierarchy Process (AHP)
 
 <details>
   <summary>Preference Rank</summary>
