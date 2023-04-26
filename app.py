@@ -138,7 +138,7 @@ if (((len(Options)) and (len(Factors)))):
                 consistency_ratio = consistency_index / RI[m]
                 if((consistency_ratio > 0.1)):
                     # st.write("Your answers are highly inconsistent with different choices.So a better option can not be selected with these priorities")
-                    st.error(f"Consistency Ratio {consistency_index:.2f} > 0.1")
+                    st.error(f"Consistency Ratio {consistency_ratio:.2f} > 0.1")
                     exit(0)
                 # st.write(f"CR = {consistency_ratio}")
                 
@@ -153,6 +153,7 @@ if (((len(Options)) and (len(Factors)))):
             # FP (Factors Priority)
             FP = pd.DataFrame(data = np.ones((n,n)),index = Factors)
             # st.dataframe(FP)
+            st.divider()
             for i in range (n-1):
                 for j in range (i+1,n):
                     FP.iloc[i][j] = st.select_slider(f"Evaluate {Factors[i]} with respect to {Factors[j]}",options=rating,value=1)
