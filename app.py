@@ -12,6 +12,9 @@ hide_streamlit_style="""
     h1{
         color: #FF5733;
         }
+    h4{
+        color: #FF5733;
+        }
     h5{
         color: orange;
         } 
@@ -19,18 +22,18 @@ hide_streamlit_style="""
         color: green;
         } 
     p{
-        color: red;
+
+        color: skyblue;
         }
     </style>
 
     """
 st.markdown(hide_streamlit_style,unsafe_allow_html=True)
 st.title("Analytic Hierarchy Process",anchor=False)
-
 # Gloabal Variables
 add_Criteria = ['Yes','No']
 add_Options = ['Yes','No']
-rating = [0.11,0.12,0.14,0.16,0.20,0.25,0.33,0.50,1.00,2.00,3.00,4.00,5.00,6.00,7.00,8.00,9.00]
+rating = [0.11,0.12,0.14,0.17,0.20,0.25,0.333,0.50,1.00,2.00,3.00,4.00,5.00,6.00,7.00,8.00,9.00]
 n=1
 m=1
 status =False
@@ -47,12 +50,15 @@ def subheadingtext(text:str):
         result = "".join(message)
         response.markdown(f'##### *{result}* ')
         time.sleep(0.04)
+st.divider()
+st.markdown(f"<h3 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h3>", unsafe_allow_html=True)
 
-# st.select_slider("select",[1,2,3,4,5,6,7,8,9],value=1)
-st.subheader("Let’s Begin with Defining Your Goal .",anchor=False)
+# st.radio("select",[1,2,3,4,5,6,7,8,9],value=1)
+# s=st.markdown(f"<h2 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h2>", unsafe_allow_html=True)
 goal = st.text_input("What is your Goal ?",placeholder="your Goal ?")
 if goal!="":
-    st.markdown("###### Fine , Your Goal is Defined , Now please identify your criteria.")
+    st.markdown(f"<h6 style='text-align: center;'> Fine , Your Goal is Defined , Now please identify your criteria.</h6>", unsafe_allow_html=True)
+    # st.markdown("###### Fine , Your Goal is Defined , Now please identify your criteria.")
     # st.success(goal)
     criteria = st.text_input(f"Enter criteria : {n}",key="criteria"+str(n),placeholder="Factor "+str(n))
     Factors.append(criteria)
@@ -117,8 +123,11 @@ if (((len(Options)) and (len(Factors)))):
                     for k  in range (j+1,m):
                         # df.iloc[j][k] = st.number_input(f"Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}",min_value=0.1,max_value=9.0)
                         # st.write(f"Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}")
-                        df.iloc[j][k] = st.select_slider(f"Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}",options=rating,value=1)
+                        st.markdown(f"<h4 style='text-align: center;'> Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}</h4>", unsafe_allow_html=True)
+                        df.iloc[j][k] = st.radio(f"Rank {Options[j]} based on {Factors[i]}",options=rating,index=8,horizontal=True,key="radio"+str(i+j+k))
                         df.iloc[k][j] = 1 / df.iloc[j][k]
+                        # space = "&nbsp;&nbsp;"*50 
+                        st.markdown(f"<h5 style='text-align: center;'>{Options[j]}: {(df.iloc[j][k]):.2f} | {Options[k]}: {(df.iloc[k][j]):.2f}</h5>", unsafe_allow_html=True)
                 df_org = df.copy()
                 df = df.div(df.sum())
                 df['Priorities'] = np.mean(df,axis=1)
@@ -132,6 +141,8 @@ if (((len(Options)) and (len(Factors)))):
                 consistency_index = (Lambda - m)/(m-1)
                 # st.write(f"CI = {consistency_index}")
                 # st.warning(df_org.values.sum())
+                # st.info(f"n = {n} , m={m}")
+                # st.dataframe(df_org)
                 if(df_org.values.sum()==9.0):
                     st.write("update priorities")
                     exit(0)
@@ -156,8 +167,10 @@ if (((len(Options)) and (len(Factors)))):
             st.divider()
             for i in range (n-1):
                 for j in range (i+1,n):
-                    FP.iloc[i][j] = st.select_slider(f"Evaluate {Factors[i]} with respect to {Factors[j]}",options=rating,value=1)
+                    st.markdown(f"<h4 style='text-align: center;'>{Factors[i]} vs {Factors[j]}</h4>", unsafe_allow_html=True)
+                    FP.iloc[i][j] = st.radio(f"Evaluate {Factors[i]} with respect to {Factors[j]}",options=rating,index=8,horizontal=True)
                     FP.iloc[j][i] = (1)/(FP.iloc[i][j])
+                    st.markdown(f"<h5 style='text-align: center;'>{Factors[i]}: {(FP.iloc[i][j]):.2f} | {Factors[j]}: {(FP.iloc[j][i]):.2f}</h5>", unsafe_allow_html=True)
 
 
             FP_org = FP.copy()
@@ -174,10 +187,11 @@ if (((len(Options)) and (len(Factors)))):
             message1 = str(final_df.loc[final_df['Priorities'] == final_df['Priorities'].max()].index[0])+" "
             message2 = str(int(final_df['Priorities'].max()*100))
             st.divider()
-            showResult = st.checkbox("press to see the result")
-            if showResult:
-                subheadingtext(f"For the Goal : {goal}")
-                subheadingtext(f"According to Your Priorities ; Going with {message1} will be the Best Option , with {message2} % Support")
-                st.divider()
+            exp =False
+            with st.expander("See Result :"):
+                    subheadingtext(f"For the Goal: {goal}")
+                    subheadingtext(f"According to Your Priorities; Going with {message1} will be the Best Option, with {message2}% Support")
+
+            st.divider()
     except IndexError:
         st.error("please Answer the input fields .")
