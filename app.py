@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import time
-
+import random
 st.set_page_config(page_title="AHP", page_icon='🧐', layout="wide",initial_sidebar_state='auto')
 # Hide the "Made with Streamlit" footer
 hide_streamlit_style="""
@@ -112,6 +112,7 @@ if (((len(Options)) and (len(Factors)))):
             # AHP(n,m)
             final_df = pd.DataFrame(data = [], index = Options )
             RI = [0,0,0,0.58,0.90,1.12,1.24,1.32,1.42]
+            count = 0
             for i in range (n):
                 st.divider()
                 data = {Factors[i] : Options}
@@ -124,7 +125,8 @@ if (((len(Options)) and (len(Factors)))):
                         # df.iloc[j][k] = st.number_input(f"Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}",min_value=0.1,max_value=9.0)
                         # st.write(f"Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}")
                         st.markdown(f"<h4 style='text-align: center;'> Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}</h4>", unsafe_allow_html=True)
-                        df.iloc[j][k] = st.radio(f"Rank {Options[j]} based on {Factors[i]}",options=rating,index=8,horizontal=True,key="radio"+str(i+j+k))
+                        df.iloc[j][k] = st.radio(f"Rank {Options[j]} based on {Factors[i]}",options=rating,index=8,horizontal=True,key="radio"+str(count))
+                        count+=1
                         df.iloc[k][j] = 1 / df.iloc[j][k]
                         # space = "&nbsp;&nbsp;"*50 
                         st.markdown(f"<h5 style='text-align: center;'>{Options[j]}: {(df.iloc[j][k]):.2f} | {Options[k]}: {(df.iloc[k][j]):.2f}</h5>", unsafe_allow_html=True)
@@ -168,7 +170,7 @@ if (((len(Options)) and (len(Factors)))):
             for i in range (n-1):
                 for j in range (i+1,n):
                     st.markdown(f"<h4 style='text-align: center;'>{Factors[i]} vs {Factors[j]}</h4>", unsafe_allow_html=True)
-                    FP.iloc[i][j] = st.radio(f"Evaluate {Factors[i]} with respect to {Factors[j]}",options=rating,index=8,horizontal=True)
+                    FP.iloc[i][j] = st.radio(f"Evaluate {Factors[i]} with respect to {Factors[j]}",options=rating,index=8,horizontal=True,key="radio "+str(i+j))
                     FP.iloc[j][i] = (1)/(FP.iloc[i][j])
                     st.markdown(f"<h5 style='text-align: center;'>{Factors[i]}: {(FP.iloc[i][j]):.2f} | {Factors[j]}: {(FP.iloc[j][i]):.2f}</h5>", unsafe_allow_html=True)
 
