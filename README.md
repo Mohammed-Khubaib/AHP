@@ -14,8 +14,11 @@
    9. Extremely preferred
   
 </details>
-## Example 1
-[AHP](https://user-images.githubusercontent.com/102320167/234571053-64639254-1cd3-405f-8d4d-7005aeffec6e.mov)
+
+## Example1
+[AHP1](https://user-images.githubusercontent.com/102320167/234571053-64639254-1cd3-405f-8d4d-7005aeffec6e.mov)
+
 ---
-## Example 2
-[AHP](https://user-images.githubusercontent.com/102320167/235031523-bf8aa24c-6e40-48d5-97b4-b9a821a3b4f4.mov)
+
+## Example2
+[AHP2](https://user-images.githubusercontent.com/102320167/235031523-bf8aa24c-6e40-48d5-97b4-b9a821a3b4f4.mov)
