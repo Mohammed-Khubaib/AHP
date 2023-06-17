@@ -2,11 +2,8 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import time
-import random
 st.set_page_config(page_title="AHP", page_icon='🧐', layout="wide",initial_sidebar_state='auto')
 # Hide the "Made with Streamlit" footer
-        # color: #FF5733;
-        # color: #66C4FF; nice color
 hide_streamlit_style="""
     <style>
     #MainMenu{visibility:hidden;}
@@ -74,7 +71,7 @@ def subheadingtext(text:str):
         result = "".join(message)
         response.markdown(f'##### {result} ',unsafe_allow_html=True)
         time.sleep(0.02)
-st.divider()
+# st.divider()
 st.markdown(f"<h3 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h3>", unsafe_allow_html=True)
 
 # st.radio("select",[1,2,3,4,5,6,7,8,9],value=1)
@@ -137,8 +134,8 @@ if (((len(Options)) and (len(Factors)))):
             final_df = pd.DataFrame(data = [], index = Options )
             RI = [0,0,0,0.58,0.90,1.12,1.24,1.32,1.42]
             count = 0
+            st.divider()
             for i in range (n):
-                st.divider()
                 data = {Factors[i] : Options}
                 for j in range (m):
                     l = [1.]*m
@@ -156,6 +153,7 @@ if (((len(Options)) and (len(Factors)))):
                         df.iloc[k][j] = 1 / df.iloc[j][k]
                         # space = "&nbsp;&nbsp;"*50 
                         st.markdown(f"<h5 style='text-align: center;'>{Options[j]}: {(df.iloc[j][k]):.2f} | {Options[k]}: {(df.iloc[k][j]):.2f}</h5>", unsafe_allow_html=True)
+                        st.divider()
                 df_org = df.copy()
                 df = df.div(df.sum())
                 df['Priorities'] = np.mean(df,axis=1)
@@ -171,7 +169,7 @@ if (((len(Options)) and (len(Factors)))):
                 # st.warning(df_org.values.sum())
                 # st.info(f"n = {n} , m={m}")
                 # st.dataframe(df_org)
-                st.warning(df_org.values.sum())
+                # st.warning(df_org.values.sum())
                 if(df_org.values.sum()%3==0):
                     st.write("update priorities")
                     exit(0)
@@ -193,7 +191,7 @@ if (((len(Options)) and (len(Factors)))):
             # FP (Factors Priority)
             FP = pd.DataFrame(data = np.ones((n,n)),index = Factors)
             # st.dataframe(FP)
-            st.divider()
+            # st.divider()
             count = 0 # for keeping the key unique
             for i in range (n-1):
                 for j in range (i+1,n):
@@ -217,7 +215,7 @@ if (((len(Options)) and (len(Factors)))):
             # final_df
             message1 = str(final_df.loc[final_df['Priorities'] == final_df['Priorities'].max()].index[0])+" "
             message2 = str(int(final_df['Priorities'].max()*100))
-            st.divider()
+            # st.divider()
             exp =False
             # with st.expander("See Result :"):
             col1 , col2  = st.columns([2.5,4])
