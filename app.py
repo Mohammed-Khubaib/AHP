@@ -5,31 +5,54 @@ import time
 import random
 st.set_page_config(page_title="AHP", page_icon='🧐', layout="wide",initial_sidebar_state='auto')
 # Hide the "Made with Streamlit" footer
+        # color: #FF5733;
+        # color: #66C4FF; nice color
 hide_streamlit_style="""
     <style>
     #MainMenu{visibility:hidden;}
     footer{visibility:hidden;}
     h1{
-        color: #FF5733;
+        color: #66C4FF;
         }
     h4{
-        color: #FF5733;
+        # color: #FF5733;
+        color:   #E04078;
+        text-align: center;
         }
     h5{
-        color: orange;
-        } 
+        color: #A3D7FF;
+        }
+    span {
+        # color : #A3D7FF;
+        font-size: inherit;
+        font-weight: inherit;
+    }
     h6{
-        color: green;
+        color: #7AC917;
+        # color:  #A3D7FF;
         } 
     p{
 
-        color: skyblue;
+        color:  #5A88A6;
+        # color: skyblue;
         }
+    .option1 {
+        color:#00CED1;
+    }
+    .option2 {
+        color: #FFDB58;
+    }
+    .factors {
+        color: #FF9800;
+    }
     </style>
+
 
     """
 st.markdown(hide_streamlit_style,unsafe_allow_html=True)
-st.title("Analytic Hierarchy Process",anchor=False)
+c1 , c2  = st.columns([0.75,2])
+with c2 :
+    st.title("Analytic Hierarchy Process",anchor=False)
 # Gloabal Variables
 add_Criteria = ['Yes','No']
 add_Options = ['Yes','No']
@@ -40,6 +63,7 @@ status =False
 Factors = []
 Options = []
 
+#262730
 
 def subheadingtext(text:str):
     message = []
@@ -48,8 +72,8 @@ def subheadingtext(text:str):
     for i in tokens:
         message.append(i)
         result = "".join(message)
-        response.markdown(f'##### *{result}* ')
-        time.sleep(0.04)
+        response.markdown(f'##### {result} ',unsafe_allow_html=True)
+        time.sleep(0.02)
 st.divider()
 st.markdown(f"<h3 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h3>", unsafe_allow_html=True)
 
@@ -124,7 +148,9 @@ if (((len(Options)) and (len(Factors)))):
                     for k  in range (j+1,m):
                         # df.iloc[j][k] = st.number_input(f"Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}",min_value=0.1,max_value=9.0)
                         # st.write(f"Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}")
-                        st.markdown(f"<h4 style='text-align: center;'> Evaluate {Options[j]} with respect to {Options[k]} based on {Factors[i]}</h4>", unsafe_allow_html=True)
+                        st.markdown(f'<h4>How would you rate <span class="option1">{Options[j]}</span> compared to <span class="option2">{Options[k]}</span> based on <span class="factors">{Factors[i]}</span> ?</h4>', unsafe_allow_html=True)
+                        
+                        # st.markdown(f"<h4 style='text-align: center;'>rate </h4><h5>{Options[j]}</h5><h4>compared to </h4><h5>{Options[k]}</h5><h4>based on </h4><h5>{Factors[i]}</h5>", unsafe_allow_html=True)
                         df.iloc[j][k] = st.radio(f"Rank {Options[j]} based on {Factors[i]}",options=rating,index=8,horizontal=True,key="radio"+str(count))
                         count+=1
                         df.iloc[k][j] = 1 / df.iloc[j][k]
@@ -145,7 +171,8 @@ if (((len(Options)) and (len(Factors)))):
                 # st.warning(df_org.values.sum())
                 # st.info(f"n = {n} , m={m}")
                 # st.dataframe(df_org)
-                if(df_org.values.sum()==9.0):
+                st.warning(df_org.values.sum())
+                if(df_org.values.sum()%3==0):
                     st.write("update priorities")
                     exit(0)
                 consistency_ratio = consistency_index / RI[m]
@@ -167,10 +194,12 @@ if (((len(Options)) and (len(Factors)))):
             FP = pd.DataFrame(data = np.ones((n,n)),index = Factors)
             # st.dataframe(FP)
             st.divider()
+            count = 0 # for keeping the key unique
             for i in range (n-1):
                 for j in range (i+1,n):
-                    st.markdown(f"<h4 style='text-align: center;'>{Factors[i]} vs {Factors[j]}</h4>", unsafe_allow_html=True)
-                    FP.iloc[i][j] = st.radio(f"Evaluate {Factors[i]} with respect to {Factors[j]}",options=rating,index=8,horizontal=True,key="radio "+str(i+j))
+                    st.markdown(f'<h4> <span class="option2">{Factors[i]}</span> vs <span class="factors">{Factors[j]}</span></h4>', unsafe_allow_html=True)
+                    FP.iloc[i][j] = st.radio(f"Evaluate {Factors[i]} with respect to {Factors[j]}",options=rating,index=8,horizontal=True,key="radio "+str(count))
+                    count+=1
                     FP.iloc[j][i] = (1)/(FP.iloc[i][j])
                     st.markdown(f"<h5 style='text-align: center;'>{Factors[i]}: {(FP.iloc[i][j]):.2f} | {Factors[j]}: {(FP.iloc[j][i]):.2f}</h5>", unsafe_allow_html=True)
 
@@ -190,10 +219,17 @@ if (((len(Options)) and (len(Factors)))):
             message2 = str(int(final_df['Priorities'].max()*100))
             st.divider()
             exp =False
-            with st.expander("See Result :"):
-                    subheadingtext(f"For the Goal: {goal}")
-                    subheadingtext(f"According to Your Priorities; Going with {message1} will be the Best Option, with {message2}% Support")
-
+            # with st.expander("See Result :"):
+            col1 , col2  = st.columns([2.5,4])
+            col3 , col4 = st.columns([1,3])
             st.divider()
+            with col2:
+                if st.button("Generate Recommendation",help="submit",key="1"):
+                        # st.markdown(f'<p><span class="highlight">highlighted 1 {subheadingtext(f"For the Goal: {goal}")}{subheadingtext(f"According to Your Priorities; Going with {message1} will be the Best Option, with {message2}% Support")}</span></p>',unsafe_allow_html=True)
+                        with col4:
+                            subheadingtext(f'*For the Goal:  <span class="factors">{goal}*<span>')
+                            subheadingtext(f'*According to Your Priorities; Going with <span class="factors">{message1}</span> will be the Best Option, with <span class="factors">{message2}%</span> Support*')
+
+            # st.divider()
     except IndexError:
         st.error("please Answer the input fields .")
