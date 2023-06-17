@@ -72,8 +72,17 @@ def subheadingtext(text:str):
         response.markdown(f'##### {result} ',unsafe_allow_html=True)
         time.sleep(0.02)
 # st.divider()
+with st.sidebar:
+    st.write("1: Equally Preferred")
+    st.write("2: Slightly Preferred")
+    st.write("3: Moderately Preferred")
+    st.write("4: Strongly Preferred")
+    st.write("5: Very Strongly Preferred")
+    st.write("6: Extremely Strongly Preferred")
+    st.write("7: Exceptionally Strongly Preferred")
+    st.write("8: Overwhelmingly Strongly Preferred")
+    st.write("9: Absolutely Strongly Preferred")
 st.markdown(f"<h3 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h3>", unsafe_allow_html=True)
-
 # st.radio("select",[1,2,3,4,5,6,7,8,9],value=1)
 # s=st.markdown(f"<h2 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h2>", unsafe_allow_html=True)
 goal = st.text_input("What is your Goal ?",placeholder="your Goal ?")
