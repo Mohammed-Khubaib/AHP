@@ -70,7 +70,7 @@ def subheadingtext(text:str):
         message.append(i)
         result = "".join(message)
         response.markdown(f'##### {result} ',unsafe_allow_html=True)
-        time.sleep(0.02)
+        time.sleep(0.012)
 # st.divider()
 with st.sidebar:
     st.write("1: Equally Preferred")
