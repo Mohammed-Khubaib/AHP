@@ -73,15 +73,18 @@ def subheadingtext(text:str):
         time.sleep(0.012)
 # st.divider()
 with st.sidebar:
-    st.write("1: Equally Preferred")
-    st.write("2: Slightly Preferred")
-    st.write("3: Moderately Preferred")
-    st.write("4: Strongly Preferred")
-    st.write("5: Very Strongly Preferred")
-    st.write("6: Extremely Strongly Preferred")
-    st.write("7: Exceptionally Strongly Preferred")
-    st.write("8: Overwhelmingly Strongly Preferred")
-    st.write("9: Absolutely Strongly Preferred")
+    st.header("Preference Scale :")
+    st.write("""
+            1 : Equally preferred\n
+            2 : Equally to moderately preferred\n
+            3 : Moderately preferred\n
+            4 : Moderately to strongly preferred\n
+            5 : strongly preferred\n
+            6 : strongly to very strongly preferred\n
+            7 : very strongly preferred\n
+            8 : very to extremely preferred\n
+            9 : Extremely preferred\n
+        """)
 st.markdown(f"<h3 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h3>", unsafe_allow_html=True)
 # st.radio("select",[1,2,3,4,5,6,7,8,9],value=1)
 # s=st.markdown(f"<h2 style='text-align: center;'>Let’s Begin with Defining Your Goal .</h2>", unsafe_allow_html=True)
