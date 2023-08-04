@@ -2,7 +2,24 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import time
+import json
+import requests
+from streamlit_lottie import st_lottie
 st.set_page_config(page_title="AHP", page_icon='🧐', layout="wide",initial_sidebar_state='auto')
+
+# Using the st_lottie function to load and display the animation
+def load_lottie_url(url:str):
+    r=requests.get(url)
+    if r.status_code!=200:
+        st.warning('No image')
+        return None
+    return r.json()
+
+def load_lottie_file(filepath:str):
+    with open(filepath,"r") as f:
+        return json.load(f)
+lottie_file1 =load_lottie_file('./assets/f1.json')
+lottie_file2 =load_lottie_file('./assets/f2.json')
 # Hide the "Made with Streamlit" footer
 hide_streamlit_style="""
     <style>
@@ -48,6 +65,8 @@ hide_streamlit_style="""
     """
 st.markdown(hide_streamlit_style,unsafe_allow_html=True)
 c1 , c2  = st.columns([0.75,2])
+with c1 :
+    st_lottie(lottie_file1,speed=0.5,reverse=False,height=120,width=180)
 with c2 :
     st.title("Analytic Hierarchy Process",anchor=False)
 # Gloabal Variables
@@ -73,6 +92,7 @@ def subheadingtext(text:str):
         time.sleep(0.012)
 # st.divider()
 with st.sidebar:
+    st_lottie(lottie_file2,speed=0.5,reverse=False,height=180,width=280)
     st.header("Preference Scale :")
     st.write("""
             1 : Equally preferred\n
