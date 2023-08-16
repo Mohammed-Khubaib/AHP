@@ -2,7 +2,7 @@
 ## The Analytic Hierarchy Process (AHP)
 
 <details>
-  <summary>Preference Rank</summary>
+  <summary>Preference Scale</summary>
   
    1. Equally preferred 
    2. Equally to moderately preferred
@@ -25,11 +25,11 @@
 
 [AHPV2](https://user-images.githubusercontent.com/102320167/235031523-bf8aa24c-6e40-48d5-97b4-b9a821a3b4f4.mov)
 
---
+---
 ### Version 3 :
 [AHPV3](https://github.com/Mohammed-Khubaib/AHP/assets/102320167/568f4885-7e17-42cb-b8f5-fcc6b7ca8947)
 
--- 
+--- 
 ### Final Version :
 
 [AHPV4](https://github.com/Mohammed-Khubaib/AHP/assets/102320167/424041af-8620-4e6d-ad9b-aa91f812a682)
