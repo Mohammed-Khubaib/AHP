@@ -257,7 +257,7 @@ if (((len(Options)) and (len(Factors)))):
                 if st.button("Generate Recommendation",help="submit",key="1"):
                         # st.markdown(f'<p><span class="highlight">highlighted 1 {subheadingtext(f"For the Goal: {goal}")}{subheadingtext(f"According to Your Priorities; Going with {message1} will be the Best Option, with {message2}% Support")}</span></p>',unsafe_allow_html=True)
                         with col4:
-                            subheadingtext(f'*For the Goal:  <span class="factors">{goal}*<span>')
+                            subheadingtext(f'For the Goal:  <span class="factors">{goal}<span>')
                             subheadingtext(f'*According to Your Priorities; Going with <span class="factors">{message1}</span> will be the Best Option, with <span class="factors">{message2}%</span> Support*')
 
             # st.divider()
